@@ -1,0 +1,47 @@
+
+name: Compilar APK Android
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Descargar proyecto
+        uses: actions/checkout@v4
+
+      - name: Instalar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Instalar Godot
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q Godot_v4.2.2-stable_linux.x86_64.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+
+      - name: Instalar plantillas Android
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.2.2.stable
+          unzip -q Godot_v4.2.2-stable_export_templates.tpz
+          cp -r templates/* ~/.local/share/godot/export_templates/4.2.2.stable/
+
+      - name: Importar proyecto
+        run: ./godot --headless --editor --path . --quit
+
+      - name: Compilar APK
+        run: |
+          mkdir -p build
+          ./godot --headless --path . --export-debug "Android" build/Cronicas_de_Ehecatl.apk
+
+      - name: Guardar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cronicas-de-Ehecatl-Android
+          path: build/Cronicas_de_Ehecatl.apk
+          
