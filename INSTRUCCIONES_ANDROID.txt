@@ -1,0 +1,8 @@
+SUBIR DESDE EL CELULAR
+1. Descomprime este ZIP en tu telefono.
+2. En Chrome, abre https://github.dev/jorshsk-alt/Cr-nicas-de-Ehecatl- (inicia sesion).
+3. En el explorador de archivos del editor web, sube los archivos y carpetas contenidos en este ZIP a la RAIZ del repositorio (no la carpeta contenedora). Si la interfaz movil no permite subir carpetas, activa Sitio para computadoras o usa una app Git.
+4. En Source Control, escribe un mensaje y haz Commit & Push (rama main).
+5. En github.com, entra al repositorio > Actions > Compilar APK Android > Run workflow.
+6. Cuando termine en verde, abre la ejecucion y descarga el Artifact Cronicas-de-Ehecatl-APK. Extrae la APK e instalala.
+NOTA: Este flujo no se ha ejecutado ni validado en GitHub. Si falla, comparte la captura del log.
