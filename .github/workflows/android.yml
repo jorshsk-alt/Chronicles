@@ -34,6 +34,29 @@ jobs:
       - name: Importar proyecto
         run: ./godot --headless --editor --path . --quit
 
+      - name: Crear firma Android
+        run: |
+          mkdir -p ~/.android
+          keytool -genkeypair \
+            -v \
+            -keystore ~/.android/debug.keystore \
+            -storepass android \
+            -alias androiddebugkey \
+            -keypass android \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+          mkdir -p ~/.config/godot
+          cat > ~/.config/godot/editor_settings-4.tres <<'EOF'
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/debug_keystore = "/home/runner/.android/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          EOF
+
       - name: Compilar APK
         run: |
           mkdir -p build
